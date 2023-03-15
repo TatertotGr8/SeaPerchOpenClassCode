@@ -1,41 +1,19 @@
+/*
+ Example sketch for the Xbox 360 USB library - developed by Kristian Lauszus
+ For more information visit my blog: http://blog.tkjelectronics.dk/ or
+ send me an e-mail:  kristianl@tkjelectronics.com
+ */
+
 #include <XBOXUSB.h>
+
+// Satisfy the IDE, which needs to see the include statment in the ino too.
 #ifdef dobogusinclude
 #include <spi4teensy3.h>
 #endif
 #include <SPI.h>
+
 USB Usb;
 XBOXUSB Xbox(&Usb);
-const int ENA_PIN = 23;
-const int ENB_PIN = 25;
-
-const int ENA_Balls_PIN = 27;
-const int ENB_Balls_PIN = 29;
-
-const int ENA_Cock_PIN = 31;
-const int ENB_Cock_PIN = 33;
-
-const int ENA_Dick_PIN = 35;
-const int ENB_Dick_PIN = 37;
-
-const int IN1_PIN = 22;
-const int IN2_PIN = 24;
-const int IN3_PIN = 26;
-const int IN4_PIN = 28;
-
-const int IN1_Balls_PIN = 30;
-const int IN2_Balls_PIN = 32;
-const int IN3_Balls_PIN = 34;
-const int IN4_Balls_PIN = 36;
-
-const int IN1_Cock_PIN = 38;
-const int IN2_Cock_PIN = 40;
-const int IN3_Cock_PIN = 42;
-const int IN4_Cock_PIN = 44;
-
-const int IN1_Dick_PIN = 46;
-const int IN2_Dick_PIN = 48;
-const int IN3_Dick_PIN = 50;
-const int IN4_Dick_PIN = 52;
 
 void setup() {
   Serial.begin(115200);
@@ -44,145 +22,92 @@ void setup() {
 #endif
   if (Usb.Init() == -1) {
     Serial.print(F("\r\nOSC did not start"));
-    while (1); //halt ;
-
-  pinMode(ENA_PIN, OUTPUT);
-  pinMode(IN1_PIN, OUTPUT);
-  pinMode(IN2_PIN, OUTPUT);
-    
-  pinMode(ENB_PIN, OUTPUT);
-  pinMode(IN3_PIN, OUTPUT);
-  pinMode(IN4_PIN, OUTPUT); 
-    
-  pinMode(ENA_Balls_PIN, OUTPUT);  
-  pinMode(IN1_Balls_PIN,OUTPUT);
-  pinMode(IN2_Balls_PIN,OUTPUT);
-    
-  pinMode(ENB_Balls_PIN, OUTPUT); 
-  pinMode(IN3_Balls_PIN,OUTPUT);
-  pinMode(IN4_Balls_PIN,OUTPUT);
-    
-  pinMode(ENA_Balls_PIN, OUTPUT); 
-  pinMode(IN1_Cock_PIN,OUTPUT);
-  pinMode(IN2_Cock_PIN,OUTPUT);
-    
-  pinMode(ENB_Cock_PIN, OUTPUT); 
-  pinMode(IN3_Cock_PIN,OUTPUT);
-  pinMode(IN4_Cock_PIN,OUTPUT);
-    
-  pinMode(ENA_Dick_PIN, OUTPUT); 
-  pinMode(IN1_Cock_PIN,OUTPUT);
-  pinMode(IN2_Cock_PIN,OUTPUT);
-    
-  pinMode(ENB_Dick_PIN, OUTPUT); 
-  pinMode(IN3_Cock_PIN,OUTPUT);
-  pinMode(IN4_Cock_PIN,OUTPUT);
-
+    while (1); //halt
   }
   Serial.print(F("\r\nXBOX USB Library Started"));
 }
-
 void loop() {
   Usb.Task();
   if (Xbox.Xbox360Connected) {
-    /*if (Xbox.getButtonPress(LT) || Xbox.getButtonPress(RT)) {
-      Serial.print("LT: "); 
-    analogWrite(ENA_Cock_PIN, 255);*/
+    if (Xbox.getButtonPress(LT) || Xbox.getButtonPress(RT)) {
+      Serial.print("LT: ");
+      Serial.print(Xbox.getButtonPress(LT));
+      Serial.print("\tRT: ");
+      Serial.println(Xbox.getButtonPress(RT));
+      Xbox.setRumbleOn(Xbox.getButtonPress(LT), Xbox.getButtonPress(RT));
+    } else
+      Xbox.setRumbleOn(0, 0);
 
-// Back Y Motors Up
-if (Xbox.getButtonPress(LT)) {
-  analogWrite(ENB_Cock_PIN, 255);  
-  pinMode(IN3_Cock_PIN, HIGH);
-  pinMode(IN4_Cock_PIN, LOW);
-
-  analogWrite(ENA_Dick_PIN, 255);
-  pinMode(IN1_Cock_PIN, HIGH);
-  pinMode(IN2_Cock_PIN, LOW);
-}
-else if (!Xbox.getButtonClick(LT)) {     
-  analogWrite(ENB_Cock_PIN, 0);  
-  analogWrite(ENA_Dick_PIN, 0);  
-  pinMode(IN3_Cock_PIN, LOW);
-  pinMode(IN4_Cock_PIN, LOW);
-}
-
-
-
-  //Back Y Motors Down 
-if (Xbox.getButtonPress(RT)) { 
-  analogWrite(ENB_Cock_PIN, 255); 
-  pinMode(IN3_Cock_PIN,LOW);
-  pinMode(IN4_Cock_PIN,HIGH); 
-    
-  analogWrite(ENA_Dick_PIN, 255);
-  pinMode(IN1_Cock_PIN,LOW);
-  pinMode(IN2_Cock_PIN,HIGH); 
-} else if (!Xbox.getButtonClick(RT)) {     
-  analogWrite(ENB_Cock_PIN, 0);  
-  pinMode(IN3_Cock_PIN, LOW);
-  pinMode(IN4_Cock_PIN, LOW); 
-}
-
-
-
-
+    if (Xbox.getAnalogHat(LeftHatX) > 7500 || Xbox.getAnalogHat(LeftHatX) < -7500 || Xbox.getAnalogHat(LeftHatY) > 7500 || Xbox.getAnalogHat(LeftHatY) < -7500 || Xbox.getAnalogHat(RightHatX) > 7500 || Xbox.getAnalogHat(RightHatX) < -7500 || Xbox.getAnalogHat(RightHatY) > 7500 || Xbox.getAnalogHat(RightHatY) < -7500) {
+      if (Xbox.getAnalogHat(LeftHatX) > 7500 || Xbox.getAnalogHat(LeftHatX) < -7500) {
+        Serial.print(F("LeftHatX: "));
+        Serial.print(Xbox.getAnalogHat(LeftHatX));
+        Serial.print("\t");
+      }
       if (Xbox.getAnalogHat(LeftHatY) > 7500 || Xbox.getAnalogHat(LeftHatY) < -7500) {
         Serial.print(F("LeftHatY: "));
         Serial.print(Xbox.getAnalogHat(LeftHatY));
-      analogWrite(ENB_Balls_PIN, 255);
+        Serial.print("\t");
       }
-   
+      if (Xbox.getAnalogHat(RightHatX) > 7500 || Xbox.getAnalogHat(RightHatX) < -7500) {
+        Serial.print(F("RightHatX: "));
+        Serial.print(Xbox.getAnalogHat(RightHatX));
+        Serial.print("\t");
+      }
       if (Xbox.getAnalogHat(RightHatY) > 7500 || Xbox.getAnalogHat(RightHatY) < -7500) {
-      analogWrite(ENA_PIN, 255);
-      Serial.print(Xbox.getAnalogHat(RightHatY));
+        Serial.print(F("RightHatY: "));
+        Serial.print(Xbox.getAnalogHat(RightHatY));
       }
+      Serial.println();
     }
 
-    //All Motor Up: Up D pad 
     if (Xbox.getButtonClick(UP)) {
       Xbox.setLedOn(LED1);
-      analogWrite(ENB_Cock_PIN, 255);
-      digitalWrite(IN3_Cock_PIN, LOW);
-      digitalWrite(IN4_Cock_PIN, HIGH);
-
-      analogWrite(ENB_Dick_PIN, 255); 
-      analogWrite(ENA_Cock_PIN, 255);
-      analogWrite(ENB_Dick_PIN, 255);
-
-    } 
-    //All Motor DOWN: Down D pad 
+      Serial.println(F("Up"));
+    }
     if (Xbox.getButtonClick(DOWN)) {
       Xbox.setLedOn(LED4);
-      analogWrite(ENB_Cock_PIN, 255);
-      analogWrite(ENB_Dick_PIN, 255); 
-      analogWrite(ENA_Cock_PIN, 255);
-      analogWrite(ENB_Dick_PIN, 255);
+      Serial.println(F("Down"));
+    }
+    if (Xbox.getButtonClick(LEFT)) {
+      Xbox.setLedOn(LED3);
+      Serial.println(F("Left"));
+    }
+    if (Xbox.getButtonClick(RIGHT)) {
+      Xbox.setLedOn(LED2);
+      Serial.println(F("Right"));
     }
 
-    //Front Y Up 
-    if (Xbox.getButtonClick(LB)) 
-    analogWrite(ENB_Dick_PIN, 255); 
-    analogWrite(ENA_Cock_PIN, 255); 
-    
-    //Front Y Down 
+    if (Xbox.getButtonClick(START)) {
+      Xbox.setLedMode(ALTERNATING);
+      Serial.println(F("Start"));
+    }
+    if (Xbox.getButtonClick(BACK)) {
+      Xbox.setLedBlink(ALL);
+      Serial.println(F("Back"));
+    }
+    if (Xbox.getButtonClick(L3))
+      Serial.println(F("L3"));
+    if (Xbox.getButtonClick(R3))
+      Serial.println(F("R3"));
+
+    if (Xbox.getButtonClick(LB))
+      Serial.println(F("LB"));
     if (Xbox.getButtonClick(RB))
-    analogWrite(ENB_Dick_PIN, 255); 
-    analogWrite(ENA_Cock_PIN, 255); 
+      Serial.println(F("RB"));
+    if (Xbox.getButtonClick(XBOX)) {
+      Xbox.setLedMode(ROTATING);
+      Serial.println(F("Xbox"));
+    }
 
-    //Arm
-    if (Xbox.getButtonClick(A)){
-      analogWrite(ENB_PIN, 255);
-      digitalWrite(IN3_PIN, LOW);
-      digitalWrite(IN4_PIN, HIGH); 
-    }
-    else if (Xbox.getButtonClick(B)) {
-      analogWrite(ENB_PIN, 255);
-      digitalWrite(IN3_PIN, LOW);
-      digitalWrite(IN4_PIN, HIGH);
-    }
-    else{
-      digitalWrite(IN3_PIN, LOW);
-      digitalWrite(IN4_PIN, LOW);
-    }
+    if (Xbox.getButtonClick(A))
+      Serial.println(F("A"));
+    if (Xbox.getButtonClick(B))
+      Serial.println(F("B"));
+    if (Xbox.getButtonClick(X))
+      Serial.println(F("X"));
+    if (Xbox.getButtonClick(Y))
+      Serial.println(F("Y"));
+  }
   delay(1);
-  } 
+}
