@@ -49,24 +49,31 @@ void setup() {
   pinMode(ENA_PIN, OUTPUT);
   pinMode(IN1_PIN, OUTPUT);
   pinMode(IN2_PIN, OUTPUT);
+    
   pinMode(ENB_PIN, OUTPUT);
   pinMode(IN3_PIN, OUTPUT);
   pinMode(IN4_PIN, OUTPUT); 
+    
   pinMode(ENA_Balls_PIN, OUTPUT);  
   pinMode(IN1_Balls_PIN,OUTPUT);
   pinMode(IN2_Balls_PIN,OUTPUT);
+    
   pinMode(ENB_Balls_PIN, OUTPUT); 
   pinMode(IN3_Balls_PIN,OUTPUT);
   pinMode(IN4_Balls_PIN,OUTPUT);
+    
   pinMode(ENA_Balls_PIN, OUTPUT); 
   pinMode(IN1_Cock_PIN,OUTPUT);
   pinMode(IN2_Cock_PIN,OUTPUT);
+    
   pinMode(ENB_Cock_PIN, OUTPUT); 
   pinMode(IN3_Cock_PIN,OUTPUT);
   pinMode(IN4_Cock_PIN,OUTPUT);
+    
   pinMode(ENA_Dick_PIN, OUTPUT); 
   pinMode(IN1_Cock_PIN,OUTPUT);
   pinMode(IN2_Cock_PIN,OUTPUT);
+    
   pinMode(ENB_Dick_PIN, OUTPUT); 
   pinMode(IN3_Cock_PIN,OUTPUT);
   pinMode(IN4_Cock_PIN,OUTPUT);
@@ -78,19 +85,30 @@ void setup() {
 void loop() {
   Usb.Task();
   if (Xbox.Xbox360Connected) {
-    if (Xbox.getButtonPress(LT) || Xbox.getButtonPress(RT)) {
+    /*if (Xbox.getButtonPress(LT) || Xbox.getButtonPress(RT)) {
       Serial.print("LT: "); 
-    analogWrite(ENA_Cock_PIN, 255);
+    analogWrite(ENA_Cock_PIN, 255);*/
 
     //Back Y Motors Up 
-      Serial.print(Xbox.getButtonPress(LT));
-    analogWrite(ENB_Cock_PIN, 255); 
+    Serial.print(Xbox.getButtonPress(LT));
+    analogWrite(ENB_Cock_PIN, 255);  
+    pinMode(IN3_Cock_PIN,HIGH);
+    pinMode(IN4_Cock_PIN,LOW);
+    
     analogWrite(ENA_Dick_PIN, 255);
+    pinMode(IN1_Cock_PIN,HIGH);
+    pinMode(IN2_Cock_PIN,LOW);
+    
     
     //Back Y Motors Down 
-      Serial.println(Xbox.getButtonPress(RT)); 
+    Serial.println(Xbox.getButtonPress(RT)); 
     analogWrite(ENB_Cock_PIN, 255); 
+    pinMode(IN3_Cock_PIN,LOW);
+    pinMode(IN4_Cock_PIN,HIGH); 
+    
     analogWrite(ENA_Dick_PIN, 255);
+    pinMode(IN1_Cock_PIN,LOW);
+    pinMode(IN2_Cock_PIN,HIGH);
   
       if (Xbox.getAnalogHat(LeftHatY) > 7500 || Xbox.getAnalogHat(LeftHatY) < -7500) {
         Serial.print(F("LeftHatY: "));
