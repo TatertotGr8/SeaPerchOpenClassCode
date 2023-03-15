@@ -89,27 +89,43 @@ void loop() {
       Serial.print("LT: "); 
     analogWrite(ENA_Cock_PIN, 255);*/
 
-    //Back Y Motors Up 
-    Serial.print(Xbox.getButtonPress(LT));
-    analogWrite(ENB_Cock_PIN, 255);  
-    pinMode(IN3_Cock_PIN,HIGH);
-    pinMode(IN4_Cock_PIN,LOW);
+// Back Y Motors Up
+if (Xbox.getButtonPress(LT)) {
+  analogWrite(ENB_Cock_PIN, 255);  
+  pinMode(IN3_Cock_PIN, HIGH);
+  pinMode(IN4_Cock_PIN, LOW);
+
+  analogWrite(ENA_Dick_PIN, 255);
+  pinMode(IN1_Cock_PIN, HIGH);
+  pinMode(IN2_Cock_PIN, LOW);
+}
+else if (!Xbox.getButtonClick(LT)) {     
+  analogWrite(ENB_Cock_PIN, 0);  
+  analogWrite(ENA_Dick_PIN, 0);  
+  pinMode(IN3_Cock_PIN, LOW);
+  pinMode(IN4_Cock_PIN, LOW);
+}
+
+
+
+  //Back Y Motors Down 
+if (Xbox.getButtonPress(RT)) { 
+  analogWrite(ENB_Cock_PIN, 255); 
+  pinMode(IN3_Cock_PIN,LOW);
+  pinMode(IN4_Cock_PIN,HIGH); 
     
-    analogWrite(ENA_Dick_PIN, 255);
-    pinMode(IN1_Cock_PIN,HIGH);
-    pinMode(IN2_Cock_PIN,LOW);
-    
-    
-    //Back Y Motors Down 
-    Serial.println(Xbox.getButtonPress(RT)); 
-    analogWrite(ENB_Cock_PIN, 255); 
-    pinMode(IN3_Cock_PIN,LOW);
-    pinMode(IN4_Cock_PIN,HIGH); 
-    
-    analogWrite(ENA_Dick_PIN, 255);
-    pinMode(IN1_Cock_PIN,LOW);
-    pinMode(IN2_Cock_PIN,HIGH);
-  
+  analogWrite(ENA_Dick_PIN, 255);
+  pinMode(IN1_Cock_PIN,LOW);
+  pinMode(IN2_Cock_PIN,HIGH); 
+} else if (!Xbox.getButtonClick(RT)) {     
+  analogWrite(ENB_Cock_PIN, 0);  
+  pinMode(IN3_Cock_PIN, LOW);
+  pinMode(IN4_Cock_PIN, LOW); 
+}
+
+
+
+
       if (Xbox.getAnalogHat(LeftHatY) > 7500 || Xbox.getAnalogHat(LeftHatY) < -7500) {
         Serial.print(F("LeftHatY: "));
         Serial.print(Xbox.getAnalogHat(LeftHatY));
@@ -170,7 +186,3 @@ void loop() {
     }
   delay(1);
   } 
-} 
-
-
-  
