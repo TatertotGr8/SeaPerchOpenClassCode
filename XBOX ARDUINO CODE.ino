@@ -98,8 +98,7 @@ void loop() {
     analogWrite(ENA_Dick_PIN, 255);
     pinMode(IN1_Cock_PIN,HIGH);
     pinMode(IN2_Cock_PIN,LOW);
-    
-    
+  
     //Back Y Motors Down 
     Serial.println(Xbox.getButtonPress(RT)); 
     analogWrite(ENB_Cock_PIN, 255); 
