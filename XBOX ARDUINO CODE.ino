@@ -130,16 +130,14 @@ void loop() {
 
 
 
-    if (Xbox.getAnalogHat(LeftHatX) > 7500 || Xbox.getAnalogHat(LeftHatX) < -7500 || Xbox.getAnalogHat(LeftHatY) > 7500 || Xbox.getAnalogHat(LeftHatY) < -7500 || Xbox.getAnalogHat(RightHatX) > 7500 || Xbox.getAnalogHat(RightHatX) < -7500 || Xbox.getAnalogHat(RightHatY) > 7500 || Xbox.getAnalogHat(RightHatY) < -7500) {
+   /* if (Xbox.getAnalogHat(LeftHatX) > 7500 || Xbox.getAnalogHat(LeftHatX) < -7500 || Xbox.getAnalogHat(LeftHatY) > 7500 || Xbox.getAnalogHat(LeftHatY) < -7500 || Xbox.getAnalogHat(RightHatX) > 7500 || Xbox.getAnalogHat(RightHatX) < -7500 || Xbox.getAnalogHat(RightHatY) > 7500 || Xbox.getAnalogHat(RightHatY) < -7500) {
     
       if (Xbox.getAnalogHat(LeftHatY) > 7500 || Xbox.getAnalogHat(LeftHatY) < -7500) {
         Serial.print(F("LeftHatY: "));
         Serial.print(Xbox.getAnalogHat(LeftHatY));
         Serial.print("\t"); 
 
-        digitalWrite(IN3_D_PIN, HIGH);
-        digitalWrite(IN4_D_PIN, LOW); 
-        digitalWrite(ENB_D_PIN, 255);
+        
       }
       
       }
@@ -148,12 +146,10 @@ void loop() {
         Serial.print(Xbox.getAnalogHat(RightHatY));
       }
 
-      Serial.println();
-      //All Y up 
-
-
-
-
+      
+      Serial.println();*/
+      
+      //All Y up
       if (Xbox.getButtonClick(UP)) {
       Xbox.setLedOn(LED1);
       Xbox.setLedOn(LED2);
@@ -338,9 +334,6 @@ void loop() {
      // Serial.println(F("Xbox"));
     //}
 
-
-
-
     
     if (Xbox.getButtonClick(A))
       Serial.println(F("A")); 
@@ -362,9 +355,6 @@ void loop() {
       digitalWrite(IN2_D_PIN, LOW);
       analogWrite(ENA_D_PIN,0); 
 
-
-      
-      
      //arm Up 
     if (Xbox.getButtonClick(Y)) 
       Serial.println(F("Y")); 
