@@ -163,12 +163,12 @@ void loop() {
   Serial.print("\tRT: ");
   Serial.println(Xbox.getButtonPress(RT));
   //Front Right Y
-  digitalWrite(IN3_PIN, HIGH);
-  digitalWrite(IN4_PIN, LOW); 
+  digitalWrite(IN3_PIN, LOW);
+  digitalWrite(IN4_PIN, HIGH); 
   analogWrite(ENB_PIN, 255); 
   //Front Left Y 
-  digitalWrite(IN1_B_PIN, LOW);
-  digitalWrite(IN2_B_PIN, HIGH);  
+  digitalWrite(IN1_B_PIN, HIGH);
+  digitalWrite(IN2_B_PIN, LOW);  
   analogWrite(ENA_B_PIN, 255);
   delay(3);
   } 
@@ -244,12 +244,12 @@ void loop() {
   if (Xbox.getButtonPress(RB)){ 
     Serial.println(F("RB"));   
     //Front Right Y
-    digitalWrite(IN3_PIN, LOW);
-    digitalWrite(IN4_PIN, HIGH);   
+    digitalWrite(IN3_PIN, HIGH);
+    digitalWrite(IN4_PIN, LOW);   
     analogWrite(ENA_B_PIN, 255);
     //Front Left Y 
-    digitalWrite(IN1_B_PIN, HIGH);
-    digitalWrite(IN2_B_PIN, LOW);
+    digitalWrite(IN1_B_PIN, LOW);
+    digitalWrite(IN2_B_PIN, HIGH);
     analogWrite(ENB_PIN,255); 
     delay(3);
   }   
@@ -308,8 +308,8 @@ void loop() {
       
     //32768 max
     if (Xbox.getAnalogHat(LeftHatY) > 7500) {
-    digitalWrite(IN1_D_PIN, HIGH);
-    digitalWrite(IN2_D_PIN, LOW); 
+    digitalWrite(IN1_D_PIN, LOW);
+    digitalWrite(IN2_D_PIN, HIGH); 
     analogWrite(ENA_D_PIN, 255);
     Serial.print(F("LeftHatY positive: "));
     Serial.print(Xbox.getAnalogHat(LeftHatY));
@@ -319,8 +319,8 @@ void loop() {
     }
 
     if (Xbox.getAnalogHat(LeftHatY) < -7500) {
-    digitalWrite(IN1_D_PIN, LOW);
-    digitalWrite(IN2_D_PIN, HIGH); 
+    digitalWrite(IN1_D_PIN, HIGH);
+    digitalWrite(IN2_D_PIN, LOW); 
     analogWrite(ENA_D_PIN, 255);
     Serial.print(F("LeftHatY negative: "));
     Serial.print(Xbox.getAnalogHat(LeftHatY));
@@ -333,8 +333,8 @@ void loop() {
   if (Xbox.getAnalogHat(RightHatY) > 7500) {
     Serial.print(F("RightHatY positive: "));
     Serial.print(Xbox.getAnalogHat(RightHatY));
-    digitalWrite(IN3_C_PIN, LOW);
-    digitalWrite(IN4_C_PIN, HIGH);
+    digitalWrite(IN3_C_PIN, HIGH);
+    digitalWrite(IN4_C_PIN, LOW);
     analogWrite(ENB_C_PIN, 255);
     
     delay(1);
@@ -343,28 +343,33 @@ void loop() {
   if (Xbox.getAnalogHat(RightHatY) < -7500) {
     Serial.print(F("RightHatY positive: "));
     Serial.print(Xbox.getAnalogHat(RightHatY));
-    digitalWrite(IN3_C_PIN, HIGH);
-    digitalWrite(IN4_C_PIN, LOW);
+    digitalWrite(IN3_C_PIN, LOW);
+    digitalWrite(IN4_C_PIN, HIGH);
     analogWrite(ENB_C_PIN, 255);
                  
     delay(1);
        
   }
-  delay(1); 
-      
-  delay(1);   
-  
-  analogWrite(ENA_PIN, 0);
-  analogWrite(ENB_PIN, 0);
 
-  analogWrite(ENA_B_PIN, 0);
-  analogWrite(ENB_B_PIN,0);
+
+  //front Y off
+  if (Xbox.getButtonPress(UP)){ 
+    Serial.println(F("UP"));   
+    //Front Right Y
+    analogWrite(ENA_B_PIN, 0); 
+    //Front Left Y 
+    analogWrite(ENB_PIN, 0);
+    delay(3);
+  }   
   
-  analogWrite(ENA_C_PIN,0);
-  analogWrite(ENB_C_PIN, 0);
-  
-  analogWrite(ENA_D_PIN, 0);  
-  analogWrite(ENB_D_PIN, 0); 
-   
+
+//back Y off
+  if (Xbox.getButtonPress(DOWN)){ 
+    Serial.println(F("DOWN")); 
+    analogWrite(ENB_B_PIN, 0);
+    analogWrite(ENA_PIN, 0); 
+    delay(3);
+
+  }   
   delay(1);
 }
