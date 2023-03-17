@@ -348,11 +348,36 @@ void loop() {
     if (Xbox.getButtonClick(B))
       Serial.println(F("B"));
       
-    if (Xbox.getButtonClick(X))
-      Serial.println(F("X"));
 
+      //arm down 
+     if (Xbox.getButtonClick(X))
+      Serial.println(F("X")); 
+         //unknownn: arm?
+      digitalWrite(IN1_D_PIN, HIGH);
+      digitalWrite(IN2_D_PIN, LOW);
+      analogWrite(ENA_D_PIN,255); 
+      delay(1000);  
+      
+      digitalWrite(IN1_D_PIN, LOW);
+      digitalWrite(IN2_D_PIN, LOW);
+      analogWrite(ENA_D_PIN,0); 
+
+
+      
+      
+     //arm Up 
     if (Xbox.getButtonClick(Y)) 
-      Serial.println(F("Y"));
+      Serial.println(F("Y")); 
+      
+      //unknown: arm? 
+      digitalWrite(IN1_D_PIN, LOW);
+      digitalWrite(IN2_D_PIN, HIGH);
+      analogWrite(ENA_D_PIN,255); 
+      delay(1000);  
+      
+      digitalWrite(IN1_D_PIN, LOW);
+      digitalWrite(IN2_D_PIN, LOW);
+      analogWrite(ENA_D_PIN,0); 
         
   delay(1); 
     }
