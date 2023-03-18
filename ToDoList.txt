@@ -1,0 +1,18 @@
+1.  Fix Arm 
+2. Toogle fix in code
+3.  Progressive speed on joysticks 
+4.  Fix wire box-- > looks ugly 
+5. Better power than PC 
+6.  Add a 3rd cable (more motors) 
+7. LIGHTS :0 
+8. Hard bocnecy 
+9.  Paaaaaanit?
+10. Better reflective tape 
+11.  New probellers 
+12. More coppper --> more power  
+13. Big Battery (just for fun) (maybe wall power)
+14. Cable magment (heat sink)  
+15. Docs and deisgn report 
+14. Custom PCV 
+15.  Automuas subsytems 
+16. SeaFox
